@@ -14,5 +14,5 @@ Kasra Fakhari: [Facebook](https://facebook.com/kasra.fakhari)
 
 ===========
 Just an University Project From Khaje Nasir University Of Technology ([KNTU](http://kntu.ac.ir)). <br/>
-Specially Thanks To Professor Hossein Khasteh.<br/>
+Speciall Thanks To Professor Hossein Khasteh.<br/>
 With ♥ From Tehran, Iran.
