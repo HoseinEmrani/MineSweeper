@@ -1,0 +1,285 @@
+/*--------------------------------------------------------------------------------------------------------
+    Mine Sweeper v.0.0.1
+    A University Project by:
+     Kasra Fakhari - Hosein Emrani [@hoseiin on twitter]
+    With ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚ÂÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¤. KhajeNasir Toosi University Of Technology.
+    Tehran. Iran.
+--------------------------------------------------------------------------------------------------------*/
+
+/*------------------------------------------------------
+    Importing Fonts From Google Font Service
+------------------------------------------------------*/
+@import url(http://fonts.googleapis.com/css?family=Oswald:400,300,700|Montserrat);
+
+/*------------------------------------------------------
+    Basic Styles
+------------------------------------------------------*/
+* {
+	margin: auto;
+	font-weight: normal;
+}
+
+body {
+	background: #fff;
+    font-size: 100%;
+    font-family: 'Oswald', sans-serif;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.container {
+	width: 980px;
+}
+
+/*------------------------------------------------------
+    Header
+------------------------------------------------------*/
+
+.head hgroup {
+	overflow:hidden;
+}
+
+.head hgroup h1 {
+	float:left;
+	font-size:72px;
+	text-transform: uppercase;
+	color: #606386;
+	font-weight: lighter;
+}
+
+.head header {
+    background: #77CEFF;
+}
+
+.head header .settings-toggle {
+    float: right;
+
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    margin: 30px 0;
+}
+
+.head .settings-container {
+    background: #147EC5;
+    overflow: hidden;
+}
+
+.head .settings-container .settings a {
+    color: #fff;
+
+    padding: 15px 20px 15px 15px;
+    font-size: 25px;
+    display: inline-block;
+    margin: 0px 0 0px 0;
+    font-weight: lighter;
+}
+
+.head .settings-container .settings {
+    float: left;
+}
+
+.head .custom {
+	float:right;
+}
+
+.head .custom input {
+    background: none;
+    border: none;
+    font-size: 23px;
+    width: 80px;
+    color: #fff;
+    height: 66px;
+    outline: none;
+    font-weight: lighter;
+    text-align: center;
+}
+
+.head .custom input:focus {
+	background:rgba(0,0,0,.1);
+}
+
+.head .custom button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 25px;
+    outline: none;
+    cursor: pointer;
+}
+
+.head .reset {
+    display: inline-block;
+
+    float: right;
+    margin: 28px 0;
+    font-size: 30px;
+    color: #FFF500;
+}
+
+.head .timer {
+    color: #fff;
+
+    font-size: 30px;
+    text-align: center;
+    float: left;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 10px auto;
+    width: 150px;
+}
+
+/*------------------------------------------------------
+    Footer
+------------------------------------------------------*/
+
+.footer {
+    bottom: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: #f2f2f2;
+    border-top: 1px solid #eee;
+}
+
+.footer .copyright {
+    display: inline-block;
+
+    padding: 10px;
+    font-size: 18px;
+    font-weight: lighter;
+}
+
+/*------------------------------------------------------
+    Designing Mine Map
+------------------------------------------------------*/
+
+.mine-map {
+	list-style: none;
+	margin:30px auto;
+    padding: 0;
+	overflow: hidden;
+}
+
+.mine-map li {
+    text-align: center;
+    overflow: hidden;
+    display: block;
+}
+
+.mine-map li span {
+    display: inline-block;
+    width: 40px;
+    text-align: center;
+    height: 40px;
+    border: 2.5px solid #BDBDBD;
+    /* border-right: none; */
+    /* border-bottom: none; */
+    background: #F5F6F3;
+    position: relative;
+}
+
+.mine-map li:first-child span:first-child {
+	border-radius:5px 0 0 0;
+}
+.mine-map li:first-child span:last-child {
+	border-radius:0px 5px 0 0;
+}
+.mine-map li span:last-child {
+	/* border-right: 5px solid #BDBDBD; */
+}
+.mine-map li:last-child span:first-child {
+	border-radius:0px 0 0 5px;
+}
+
+.mine-map li:last-child span {
+	/* border-bottom: 5px solid #BDBDBD; */
+}
+.mine-map li:last-child span:last-child {
+	border-radius:0px 0 5px 0;
+}
+
+.mine-map li span.Show {
+    background: #FFFFFF;
+    box-shadow: none;
+    border-color: #fff;
+}
+
+.mine-map li span p {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    left: 0;
+    right: 10px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    transition:all 0.25s ease;
+    -webkit-transition:all 0.25s ease;
+    -moz-transition:all 0.25s ease;
+    -ms-transition:all 0.25s ease;
+    -o-transition:all 0.25s ease;
+}
+
+.mine-map li span.Show p {
+    opacity: 1;
+    right: 0;
+    visibility: visible;
+}
+
+.mine-map li span:hover {
+    background: #fefefe;
+}
+
+.mine-map li span:active {
+    background: #FDFDFD;
+
+    box-shadow: inset 0 -2px 1px rgba(255, 255, 255, 0.5);
+}
+
+.mine-map li span.mineFired {
+    background: #EE1603 !important;
+    border-color: #AF1C1C;
+}
+
+.mine-map li span.flag {
+    background: rgb(60, 128, 103) !important;
+    border-color: #3FB452;
+}
+
+.mine-map li span.wrong-flag {
+    background: #72192F !important;
+    border-color: #9E3939;
+}
+
+.mine-map li span.mineShow {
+    background: rgb(224, 233, 19);
+}
+
+.mapplace {
+	position:absolute;
+	left:0;
+	right:0;
+	top: 174px;
+	bottom: 48px;
+}
+
+.mapplace ul {
+	position:absolute;
+	left:0;
+	right:0;
+	bottom:0;
+	top:0;
+	margin:auto;
+}
+
+.head .settings-container .settings a.active {
+    color: #5DC6F8;
+    background: rgba(0,0,0,.2);
+}
+

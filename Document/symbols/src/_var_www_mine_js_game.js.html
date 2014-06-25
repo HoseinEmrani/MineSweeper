@@ -1,0 +1,133 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="WHIT">
+<span class='line'>  2</span> </span><span class="COMM">/**
+<span class='line'>  3</span>  * @fileOverview This file has functions related to documenting JavaScript.
+<span class='line'>  4</span>  * @author &lt;a href="#">Kasra fakhari&lt;/a> , &lt;a href="#">Hossein Emrani&lt;/a>
+<span class='line'>  5</span>  * @version 1.0.1
+<span class='line'>  6</span>  */</span><span class="WHIT">
+<span class='line'>  7</span> 
+<span class='line'>  8</span> </span><span class="COMM">/**Game State
+<span class='line'>  9</span>  * @type boolean
+<span class='line'> 10</span>  */</span><span class="WHIT">
+<span class='line'> 11</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">GAME_RUNNING</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="COMM">/** elapsed time in second
+<span class='line'> 13</span>  * @type int
+<span class='line'> 14</span>  */</span><span class="WHIT">
+<span class='line'> 15</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 16</span> </span><span class="COMM">/** Game Timer object
+<span class='line'> 17</span>  * @type TimerID
+<span class='line'> 18</span>  * @name timer
+<span class='line'> 19</span>  */</span><span class="WHIT">
+<span class='line'> 20</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">timeStart</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 21</span> 
+<span class='line'> 22</span> </span><span class="COMM">// Preventing Map On Show ContextMenu On RightClick</span><span class="WHIT">
+<span class='line'> 23</span> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="STRN">"#map"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">on</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 24</span> </span><span class="WHIT">    </span><span class="STRN">"contextmenu"</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 25</span> </span><span class="WHIT">        </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">"ctx menu button:"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">e.which</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 26</span> 
+<span class='line'> 27</span> </span><span class="WHIT">        </span><span class="COMM">// Stop the context men u</span><span class="WHIT">
+<span class='line'> 28</span> </span><span class="WHIT">        </span><span class="NAME">e.preventDefault</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 29</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 30</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 31</span> 
+<span class='line'> 32</span> </span><span class="COMM">// Defining MapData for Reset Button</span><span class="WHIT">
+<span class='line'> 33</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">mapData</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 34</span> 
+<span class='line'> 35</span> </span><span class="COMM">/**Building map based on the "basic", "medium" and "hard" defficulties
+<span class='line'> 36</span>  * @event
+<span class='line'> 37</span>  * @name setDifficulty
+<span class='line'> 38</span>  * @param {html data tag} row
+<span class='line'> 39</span>  * @param {html data tag} cell
+<span class='line'> 40</span>  * @param {html data tag} mine
+<span class='line'> 41</span>  */</span><span class="WHIT">
+<span class='line'> 42</span> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="STRN">'.settings a'</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">click</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 43</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">$</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">hasClass</span><span class="PUNC">(</span><span class="STRN">"active"</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 44</span> 
+<span class='line'> 45</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">row</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">data</span><span class="PUNC">(</span><span class="STRN">'row'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 46</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">cell</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">data</span><span class="PUNC">(</span><span class="STRN">'cell'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 47</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">mine</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">data</span><span class="PUNC">(</span><span class="STRN">'mine'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 48</span> 
+<span class='line'> 49</span> </span><span class="WHIT">    </span><span class="NAME">mapData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">mineMap</span><span class="PUNC">(</span><span class="STRN">"#map"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">cell</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">row</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">mine</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 50</span> 
+<span class='line'> 51</span> </span><span class="WHIT">    </span><span class="NAME">$</span><span class="PUNC">(</span><span class="STRN">'.settings a'</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">removeClass</span><span class="PUNC">(</span><span class="STRN">'active'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 52</span> </span><span class="WHIT">    </span><span class="NAME">$</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">addClass</span><span class="PUNC">(</span><span class="STRN">'active'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 53</span> 
+<span class='line'> 54</span> </span><span class="WHIT">    </span><span class="NAME">e.preventDefault</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 55</span> 
+<span class='line'> 56</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 57</span> </span><span class="COMM">/**Building a custom map based on values of player's inputs
+<span class='line'> 58</span>  * @event
+<span class='line'> 59</span>  * @param {html input} rows number of rows
+<span class='line'> 60</span>  * @param {html input} cell number of cells in each row
+<span class='line'> 61</span>  * @param {html input} mine number of mines in the map
+<span class='line'> 62</span>  * @name custom
+<span class='line'> 63</span>  */</span><span class="WHIT">
+<span class='line'> 64</span> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="STRN">'.buildmap'</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">click</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 65</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">row</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="STRN">'input.rows'</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">val</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 66</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">cell</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="STRN">'input.cell'</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">val</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 67</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">mine</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="STRN">'input.mine'</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">val</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 68</span> 
+<span class='line'> 69</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">mine</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NAME">row</span><span class="WHIT"> </span><span class="PUNC">*</span><span class="WHIT"> </span><span class="NAME">cell</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 70</span> </span><span class="WHIT">        </span><span class="NAME">alert</span><span class="PUNC">(</span><span class="STRN">'Mine should be less than '</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">row</span><span class="WHIT"> </span><span class="PUNC">*</span><span class="WHIT"> </span><span class="NAME">cell</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'!'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 71</span> </span><span class="WHIT">        </span><span class="NAME">e.preventDefault</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 72</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 73</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 74</span> </span><span class="WHIT">	</span><span class="NAME">$</span><span class="PUNC">(</span><span class="STRN">'.settings a'</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">removeClass</span><span class="PUNC">(</span><span class="STRN">'active'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 75</span> </span><span class="WHIT">    </span><span class="NAME">mapData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">mineMap</span><span class="PUNC">(</span><span class="STRN">"#map"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">cell</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">row</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">mine</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 76</span> 
+<span class='line'> 77</span> </span><span class="WHIT">    </span><span class="NAME">e.preventDefault</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 78</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 79</span> </span><span class="COMM">/**Resets the map when reset butten has been clicked
+<span class='line'> 80</span>  * @event
+<span class='line'> 81</span>  * @name reset
+<span class='line'> 82</span>  */</span><span class="WHIT">
+<span class='line'> 83</span> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="STRN">'.reset'</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">click</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 84</span> </span><span class="WHIT">    </span><span class="NAME">mineMap</span><span class="PUNC">(</span><span class="STRN">"#map"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">mapData.X</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">mapData.Y</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">mapData.mineNumber</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 85</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 86</span> </span><span class="COMM">/**initialize the {@link timer} and increase {@link i} every seconds
+<span class='line'> 87</span>  * @function
+<span class='line'> 88</span>  */</span><span class="WHIT">
+<span class='line'> 89</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">timerInit</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 90</span> 
+<span class='line'> 91</span> </span><span class="WHIT">    </span><span class="NAME">GAME_RUNNING</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="STRN">'.timer'</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">text</span><span class="PUNC">(</span><span class="NAME">timeFormatter</span><span class="PUNC">(</span><span class="PUNC">++</span><span class="NAME">i</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">""</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 92</span> 
+<span class='line'> 93</span> </span><span class="WHIT">    </span><span class="NAME">timeStart</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">setTimeout</span><span class="PUNC">(</span><span class="STRN">'timerInit()'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">1000</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 94</span> 
+<span class='line'> 95</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 96</span> </span><span class="COMM">/**pause the {@link timer}
+<span class='line'> 97</span>  * @function
+<span class='line'> 98</span>  * @return nothing
+<span class='line'> 99</span>  */</span><span class="WHIT">
+<span class='line'>100</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">timerPause</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>101</span> </span><span class="WHIT">    </span><span class="NAME">clearTimeout</span><span class="PUNC">(</span><span class="NAME">timeStart</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>102</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>103</span> </span><span class="COMM">/**pause and reset the {@link timer} for a new game
+<span class='line'>104</span>  * @function
+<span class='line'>105</span>  * @return nothing
+<span class='line'>106</span>  */</span><span class="WHIT">
+<span class='line'>107</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">timerReset</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>108</span> </span><span class="WHIT">    </span><span class="NAME">timerPause</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>109</span> </span><span class="WHIT">    </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>110</span> </span><span class="WHIT">    </span><span class="NAME">$</span><span class="PUNC">(</span><span class="STRN">'.timer'</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">html</span><span class="PUNC">(</span><span class="STRN">' 0 : 0 '</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>111</span> </span><span class="WHIT">    </span><span class="NAME">timerInit</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>112</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>113</span> </span><span class="COMM">/**format time from second to [minutes]:[seconds]
+<span class='line'>114</span>  * @return {String} formatted time
+<span class='line'>115</span>  * @param {int} seconds time elapsed from first click of this game
+<span class='line'>116</span>  */</span><span class="WHIT">
+<span class='line'>117</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">timeFormatter</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">count</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>118</span> 
+<span class='line'>119</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">second</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">count</span><span class="WHIT"> </span><span class="PUNC">%</span><span class="WHIT"> </span><span class="NUMB">60</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>120</span> </span><span class="WHIT">        </span><span class="NAME">minute</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Math.floor</span><span class="PUNC">(</span><span class="NAME">count</span><span class="WHIT"> </span><span class="PUNC">/</span><span class="WHIT"> </span><span class="NUMB">60</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>121</span> 
+<span class='line'>122</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">minute</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">" : "</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">second</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>123</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>124</span> </span><span class="COMM">// Building the default map</span><span class="WHIT">
+<span class='line'>125</span> </span><span class="NAME">mapData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">mineMap</span><span class="PUNC">(</span><span class="STRN">"#map"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">10</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">10</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">18</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>126</span> </span></pre></body></html>
