@@ -5,7 +5,7 @@ An online mine sweeper developed based on jQuery.
 
 This is an online Mine Sweeper, All redisgned from that old standards of windows xp! and developed just by HTML + CSS + JavaScript (jQuery based). 
 
-#####For more detailed information about functions and events used in this game see the documentation at `Document` folder. <br/>
+#####For more detailed information about functions and events used in this game see the documentation at [`Document`](http://hoseinemrani.github.io/MineSweeper/Document/) folder. <br/>
 
 ######Authors:
 
