@@ -10,9 +10,9 @@ This is an online Mine Sweeper, All redisgned from that old standards of windows
 ######Authors:
 
 Hosein Emrani:  [Twitter](https://twitter.com/hoseiin), [Facebook](https://facebook.com/hosein.emrani) <br/>
-Kasra Fakhari: [Facebook](https://facebook.com/kasra.fakhari.5099)
+Ehsan Masoudinejad
 
 ===========
 Just an University Project From Khaje Nasir University Of Technology ([KNTU](http://kntu.ac.ir)). <br/>
-Speciall Thanks To Professor Hossein Khasteh.<br/>
+Speciall Thanks To Professor Hossein Khasteh, [Kasra Fakhari](https://facebook.com/kasra.fakhari.5099)<br/>
 With ♥ From Tehran, Iran.
