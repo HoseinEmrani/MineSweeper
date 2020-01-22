@@ -12,7 +12,8 @@ This is an online Mine Sweeper, All redisgned from that old standards of windows
 Hosein Emrani:  [Twitter](https://twitter.com/hoseiin), [Facebook](https://facebook.com/hosein.emrani) <br/>
 Ehsan Masoudinejad
 
-===========
+____
+
 Just an University Project From Khaje Nasir University Of Technology ([KNTU](http://kntu.ac.ir)). <br/>
 Speciall Thanks To [Kasra Fakhari](https://facebook.com/kasra.fakhari.5099)<br/>
 With ♥ From Tehran, Iran.
